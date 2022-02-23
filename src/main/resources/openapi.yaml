@@ -1,0 +1,64 @@
+openapi: "3.0.0"
+info:
+  description: "backend test"
+  version: "1.0.0"
+  title: 'Xcale-backend-test'
+  termsOfService: ""
+  contact:
+    email: "fjosescarmona@gmail.com"
+servers:
+  - url: /v1/backend-test
+
+paths:
+  /send-message:
+    post:
+      tags:
+        - messages
+      operationId: sendMessage
+      description: sendMessage
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendMessageRequest'
+      responses:
+        '202':
+          description: 'Mensaje enviado'
+  /get-messages:
+    get:
+      tags:
+        - messages
+      operationId: getMessages
+      description: obtiene mensajes del chat
+      parameters:
+        - in: query
+          name: groupId
+          schema:
+            type: "string"
+          required: true
+      responses:
+        '200':
+          description: 'get messages success'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetMessageResponse'
+components:
+  schemas:
+    SendMessageRequest:
+      type: object
+      properties:
+        mensaje:
+          type: string
+          example: 'Hola Mundo'
+        groupId:
+          type: string
+          example: '123456'
+    GetMessageResponse:
+      type: object
+      properties:
+        Mensaje:
+          type: string
+          example: 'Hola Mundo'
